@@ -50,6 +50,10 @@ class WeddingPlannerAPITest(unittest.TestCase):
         """Test user login"""
         print("\n🔍 Testing user login")
         
+        # Make sure we have a registered user first
+        if not self.token:
+            self.test_01_register()
+        
         login_data = {
             "email": self.test_email,
             "password": self.test_password
