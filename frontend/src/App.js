@@ -734,12 +734,20 @@ const GuestManagement = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        ...formData,
+        email: formData.email || null,
+        phone: formData.phone || null,
+        dietary_restrictions: formData.dietary_restrictions || null,
+        group: formData.group || null
+      };
+
       if (editingGuest) {
-        await axios.put(`${API}/guests/${editingGuest.id}`, formData, {
+        await axios.put(`${API}/guests/${editingGuest.id}`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         });
       } else {
-        await axios.post(`${API}/guests`, formData, {
+        await axios.post(`${API}/guests`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
@@ -758,6 +766,7 @@ const GuestManagement = () => {
       fetchGuests();
     } catch (error) {
       console.error('Failed to save guest:', error);
+      alert('Failed to save guest. Please try again.');
     }
   };
 
